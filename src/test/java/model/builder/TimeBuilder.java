@@ -2,13 +2,13 @@ package model.builder;
 
 import model.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TimeBuilder {
-    private final List<Jogador> jogadores = new ArrayList<>();
-    private final List<Partida> partidas = new ArrayList<>();
-    private final List<Campeonato> campeonatos = new ArrayList<>();
+    private final Set<Jogador> jogadores = new HashSet<>();
+    private final Set<Partida> partidas = new HashSet<>();
+    private final Set<Campeonato> campeonatos = new HashSet<>();
     private Tecnico tecnico;
     private int vitorias;
     private int empates;
@@ -45,6 +45,7 @@ public class TimeBuilder {
             throw new IllegalArgumentException("Campeonato Já existente.");
         }else{
             this.campeonatos.add(campeonato);
+
         }
         return this;
     }

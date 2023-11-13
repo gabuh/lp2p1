@@ -4,28 +4,29 @@ import jakarta.persistence.*;
 
 public class JpaFactoryConnection {
     @PersistenceContext
-    private static EntityManager entityManager;
+    private static EntityManagerFactory entityManagerFactory;
 
     public static void connect(){
         try{
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-            entityManager = entityManagerFactory.createEntityManager();
+             entityManagerFactory = Persistence.createEntityManagerFactory("default");
         }catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public static EntityManager getEntityManager() {
-        if(entityManager == null){
+    public static EntityManagerFactory getFacoryManager() {
+        if(entityManagerFactory == null){
             connect();
-            return entityManager;
+            return entityManagerFactory;
         }
-        return entityManager;
+        return entityManagerFactory;
     }
 
 
     public static void closeConnection(){
-        entityManager.close();
+        if (entityManagerFactory != null){
+            entityManagerFactory.close();
+        }
     }
 
 

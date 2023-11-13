@@ -4,12 +4,12 @@ package model.builder;
 import model.Campeonato;
 import model.Time;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CampeonatoBuilder {
 
-    private final List<Time> times = new ArrayList<>();
+    private final Set<Time> times = new HashSet<>();
     private String campeao;
     private String viceCampeao;
 

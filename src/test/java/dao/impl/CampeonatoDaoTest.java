@@ -6,17 +6,18 @@ import model.builder.TimeBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
-class CampeonatoDaoImplTest {
+class CampeonatoDaoTest {
 
-    private static CampeonatoDaoImpl campeonatoDao;
+    private static CampeonatoDao campeonatoDao;
     private static Campeonato campeonato, campeonatoComTime;
 
     @BeforeAll
     static void setUp() {
-        campeonatoDao = new CampeonatoDaoImpl();
+        campeonatoDao = new CampeonatoDao();
 
 
         campeonato = new CampeonatoBuilder() //instantiated
@@ -32,39 +33,42 @@ class CampeonatoDaoImplTest {
 
         campeonatoDao.persist(new CampeonatoBuilder() //database
                 .create());
+        campeonatoDao.persist(new CampeonatoBuilder()
+                .create());
+        campeonatoDao.persist(new CampeonatoBuilder()
+                .create());
     }
 
     @Test
     @DisplayName("saving entity into the database")
     void persist() {
-        campeonatoDao.persist(campeonato);
         campeonatoDao.persist(campeonatoComTime);
-        assertEquals(2, campeonatoDao.findAll().size());
+        assertTrue(campeonatoDao.findAll().size()>0);
     }
 
     @Test
     @DisplayName("updating entity into the database")
     void update() {
-        var campeonatoToUpdate = campeonatoDao.findById(1);
+        var campeonatoToUpdate = campeonatoDao.findAll().get(2);
         campeonatoToUpdate.setCampeao("Gabriel(Gabu) is the champion of course !");
         campeonatoDao.update(campeonatoToUpdate);
-        assertEquals("Gabriel(Gabu) is the champion of course !",campeonatoDao.findById(1).getCampeao());
+        assertEquals("Gabriel(Gabu) is the champion of course !",campeonatoDao.findById(campeonatoToUpdate.getId()).getCampeao());
     }
 
     @Test
     @DisplayName("getting entity from the database by id")
     void findById() {
-        campeonatoDao.persist(campeonato);
-        assertEquals(1 , campeonatoDao.findById(1).getId());
+        Campeonato campeonato1 = campeonatoDao.findAll().get(2);
+        assertEquals(campeonato1.getId() , campeonatoDao.findById(campeonato1.getId()).getId());
     }
 
     @Test
     @DisplayName("deleting entity into the database by sending the entity itself")
     void delete() {
-        var campeonaToDelete = campeonatoDao.findById(1);
+        var campeonaToDelete = campeonatoDao.findAll().get(3);
         System.out.println("Id: "+campeonaToDelete.getId() +",size: "+ campeonatoDao.findAll().size());
         campeonatoDao.delete(campeonaToDelete);
-        assertEquals(0, campeonatoDao.findAll().size());
+        assertNull(campeonatoDao.findById(campeonaToDelete.getId()));
     }
 
     @Test

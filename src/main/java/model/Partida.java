@@ -22,6 +22,17 @@ public class Partida {
     @ManyToMany(mappedBy = "partidas")
     private List<Time> times;
 
+
+
+    public void addTime(Time time){
+        this.times.add(time);
+    }
+
+    public void removeTime(Time time){
+        this.times.remove(time);
+    }
+
+
     public String gerarResultado(int a, int b, Time t1, Time t2){
         String placar1 = Integer.toString(a);
         String placar2 = Integer.toString(b);

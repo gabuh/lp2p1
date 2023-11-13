@@ -1,5 +1,6 @@
 package model;
 
+import dao.impl.CampeonatoDao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class Time {
     private Tecnico tecnico;
 
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
-    private List<Jogador> jogadores;
+    private Set<Jogador> jogadores;
     @ManyToMany(mappedBy = "times")
     private Set<Campeonato> campeonatos;
     @Column
@@ -35,9 +36,9 @@ public class Time {
     private int derrotas;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "time_partida", joinColumns = @JoinColumn(name = "time_id"), inverseJoinColumns = @JoinColumn(name = "partida_id"))
-    private List<Partida> partidas;
+    private Set<Partida> partidas;
 
-    public Time(String nome, Tecnico tecnico, List<Jogador> jogadores, Set<Campeonato> campeonatos, int vitorias, int empates, int derrotas, List<Partida> partidas) {
+    public Time(String nome, Tecnico tecnico, Set<Jogador> jogadores, Set<Campeonato> campeonatos, int vitorias, int empates, int derrotas, Set<Partida> partidas) {
         this.nome = nome;
         this.tecnico = tecnico;
         this.jogadores = jogadores;
@@ -47,4 +48,46 @@ public class Time {
         this.derrotas = derrotas;
         this.partidas = partidas;
     }
+
+    public void AddCampeonato(Campeonato campeonato){
+        this.campeonatos.add(campeonato);
+        campeonato.getTimes().add(this);
+    }
+
+
+    public void removeCampeonato(Campeonato campeonato){
+        this.campeonatos.remove(campeonato);
+        campeonato.getTimes().remove(this);
+    }
+
+    public void addPartida(Partida partida){
+        this.partidas.add(partida);
+        partida.getTimes().add(this);
+    }
+
+
+    public void removePartida(Partida partida){
+        this.partidas.add(partida);
+        partida.getTimes().add(this);
+    }
+
+
+    public void addJogador(Jogador jogador){
+        this.jogadores.add(jogador);
+        jogador.setTime(this);
+    }
+
+    public void removeJogador(Jogador jogador){
+        this.jogadores.remove(jogador);
+        jogador.setTime();
+    }
+
+
+
+    public void setTecnico(Tecnico tecnico) {
+        tecnico.setTime(this);
+    }
+
+
+
 }

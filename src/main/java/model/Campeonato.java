@@ -16,7 +16,7 @@ import java.util.Set;
 public class Campeonato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "campeonato_time", joinColumns = @JoinColumn(name = "campeonato_id"), inverseJoinColumns = @JoinColumn(name = "time_id"))
     private Set<Time> times;

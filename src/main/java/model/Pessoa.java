@@ -15,9 +15,15 @@ public class Pessoa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
+    private String idade;
+    @Column
+    private String nome;
+    @Column
     private String nacionalidade;
-    @Column
-    private String altura;
-    @Column
-    private int peso;
+
+    public Pessoa(String idade, String nome, String nacionalidade) {
+        this.idade = idade;
+        this.nome = nome;
+        this.nacionalidade = nacionalidade;
+    }
 }
