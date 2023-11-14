@@ -1,5 +1,6 @@
-package servlet;
+package servlets;
 
+import dao.impl.JogadorDao;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,14 +8,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Jogador;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import util.HibernateUtil;
+
 
 import java.io.IOException;
 
-@WebServlet(value = "/AddJogador")
+@WebServlet("/addJogador")
 public class AddJogadorServlet extends HttpServlet {
+
+    private JogadorDao jogadorDao;
+
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        jogadorDao = new JogadorDao();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("cadJogador.jsp");
@@ -40,14 +49,16 @@ public class AddJogadorServlet extends HttpServlet {
                 assistencias
         );
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
 
-        Transaction transaction = session.beginTransaction();
 
-        session.persist(jogador);
-
-        transaction.commit();
-
+        jogadorDao.persist(jogador);
         resp.sendRedirect("ListarJogador");
+    }
+
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        jogadorDao.close();
     }
 }

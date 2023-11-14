@@ -36,7 +36,7 @@ public class Jogador extends Pessoa{
         this.time = null;
     }
 
-    public Jogador(String nacionalidade, String idade, String nome, String altura, int peso, int numeroCamisa, String posicao, int gols, int assistencias, Time time) {
+    public Jogador(String nome, String idade,String nacionalidade , String altura, int peso, int numeroCamisa, String posicao, int gols, int assistencias) {
         super(nome,idade,nacionalidade);
         this.altura = altura;
         this.peso = peso;
@@ -44,6 +44,6 @@ public class Jogador extends Pessoa{
         this.posicao = posicao;
         this.gols = gols;
         this.assistencias = assistencias;
-        this.time = time;
     }
+
 }

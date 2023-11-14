@@ -1,4 +1,4 @@
-package servlet;
+package servlets;
 
 import dao.impl.TecnicoDao;
 import jakarta.servlet.RequestDispatcher;
@@ -11,14 +11,15 @@ import model.Tecnico;
 
 import java.io.IOException;
 
-@WebServlet(value = "/AddTecnico")
+@WebServlet("/AddTecnico")
 public class AddTecnicoServlet extends HttpServlet {
 
     private TecnicoDao tecnicoDao;
 
 
     @Override
-    public void init() {
+    public void init() throws ServletException {
+        super.init();
         tecnicoDao = new TecnicoDao();
     }
 
@@ -49,6 +50,7 @@ public class AddTecnicoServlet extends HttpServlet {
 
     @Override
     public void destroy() {
+        super.destroy();
         tecnicoDao.close();
     }
 

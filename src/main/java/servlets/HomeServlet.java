@@ -1,4 +1,4 @@
-package servlet;
+package servlets;
 
 import config.JpaFactoryConnection;
 import jakarta.servlet.ServletConfig;
