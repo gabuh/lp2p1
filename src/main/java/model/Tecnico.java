@@ -3,6 +3,8 @@ package model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,11 +12,8 @@ import lombok.*;
 @Getter
 @Entity
 @Table
-public class Tecnico extends Pessoa {
-    @Column
-    private String login;
-    @Column
-    private String senha;
+public class Tecnico extends Usuario {
+
     @Column
     private int vitorias;
     @OneToOne(cascade = CascadeType.ALL)
@@ -27,24 +26,18 @@ public class Tecnico extends Pessoa {
         time.setTecnico(this);
     }
 
-    public Tecnico(String nome, String idade, String nacionalidade, String login, String senha, int vitorias, Time time) {
-        super(nome, idade,nacionalidade);
-        this.login = login;
-        this.senha = senha;
+    public Tecnico(String nome, LocalDate dataNascimento, String nacionalidade, String email, String senha, String username, int vitorias, Time time) {
+        super(dataNascimento, nome, nacionalidade, email, senha, username);
         this.vitorias = vitorias;
         this.time = time;
     }
 
-    public Tecnico(String nome, String idade, String nacionalidade, String login, String senha, int vitorias) {
-        super(nome, idade, nacionalidade);
-        this.login = login;
-        this.senha = senha;
+    public Tecnico(String nome, LocalDate dataNascimento, String nacionalidade, String email, String senha, String username, int vitorias) {
+        super(dataNascimento, nome, nacionalidade, email, senha, username);
         this.vitorias = vitorias;
     }
 
-    public Tecnico(String nome, String idade, String nacionalidade, String login, String senha) {
-        super(nome, idade, nacionalidade);
-        this.login = login;
-        this.senha = senha;
+    public Tecnico(String nome, LocalDate dataNascimento, String nacionalidade, String email, String senha, String username) {
+        super(dataNascimento, nome, nacionalidade, email, senha, username);;
     }
 }

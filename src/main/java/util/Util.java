@@ -1,17 +1,21 @@
 package util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Util {
-    public static Date stringToDate(String date) {
-        try{
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            return dateFormat.parse(date);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        return new Date();
+    public static LocalDate stringToLocalDate(String date) {
+            return LocalDate.parse(date);
+    }
+
+    //Must at least have 5 - 16 characters, must not contain symbols
+    public static boolean validateUsername(String username){
+        String USERNAME_PATTERN = "^[a-zA-Z]{5,16}$";
+        Pattern pattern = Pattern.compile(USERNAME_PATTERN);
+        Matcher matcher = pattern.matcher(username);
+        return matcher.matches();
     }
 
 }

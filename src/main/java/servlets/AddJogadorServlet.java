@@ -32,27 +32,27 @@ public class AddJogadorServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int peso = Integer.parseInt(req.getParameter("peso"));
-        int numeroCamisa = Integer.parseInt(req.getParameter("numeroCamisa"));
-        int gols = Integer.parseInt(req.getParameter("gols"));
-        int assistencias = Integer.parseInt(req.getParameter("assistencias"));
-
-        Jogador jogador = new Jogador(
-                req.getParameter("nome"),
-                req.getParameter("idade"),
-                req.getParameter("nacionalidade"),
-                req.getParameter("altura"),
-                peso,
-                numeroCamisa,
-                req.getParameter("posicao"),
-                gols,
-                assistencias
-        );
-
-
-
-        jogadorDao.persist(jogador);
-        resp.sendRedirect("ListarJogador");
+//        int peso = Integer.parseInt(req.getParameter("peso"));
+//        int numeroCamisa = Integer.parseInt(req.getParameter("numeroCamisa"));
+//        int gols = Integer.parseInt(req.getParameter("gols"));
+//        int assistencias = Integer.parseInt(req.getParameter("assistencias"));
+//
+//        Jogador jogador = new Jogador(
+//                req.getParameter("nome"),
+//                req.getParameter("idade"),
+//                req.getParameter("nacionalidade"),
+//                req.getParameter("altura"),
+//                peso,
+//                numeroCamisa,
+//                req.getParameter("posicao"),
+//                gols,
+//                assistencias
+//        );
+//
+//
+//
+//        jogadorDao.persist(jogador);
+//        resp.sendRedirect("ListarJogador");
     }
 
 

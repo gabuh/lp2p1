@@ -31,20 +31,20 @@ public class AddTecnicoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Tecnico tecnico = new Tecnico(
-            req.getParameter("nome"),
-            req.getParameter("idade"),
-            req.getParameter("nacionalidade"),
-            req.getParameter("cpf"),
-            req.getParameter("senha")
-        );
-
-
-
-        tecnicoDao.persist(tecnico);
-
-
-        resp.sendRedirect("ListarTecnico");
+//        Tecnico tecnico = new Tecnico(
+//            req.getParameter("nome"),
+//            req.getParameter("idade"),
+//            req.getParameter("nacionalidade"),
+//            req.getParameter("email"),
+//            req.getParameter("senha")
+//        );
+//
+//
+//
+//        tecnicoDao.persist(tecnico);
+//
+//
+//        resp.sendRedirect("ListarTecnico");
     }
 
 
