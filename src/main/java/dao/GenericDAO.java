@@ -2,6 +2,9 @@ package dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+import model.Pessoa;
+import model.Usuario;
 
 import java.io.Serializable;
 import java.util.List;
@@ -62,6 +65,32 @@ public abstract class GenericDAO<T, Id extends Serializable>{
         return getEntityManager().createQuery("SELECT t FROM "+ getEntityClass().getSimpleName()+ " t", getEntityClass()).getResultList();
     }
 
+
+    public boolean checkIfUsernameExist(String username){
+        if (getEntityClass().isInstance(Usuario.class)){
+            TypedQuery<Long> query = getEntityManager().createQuery(
+                    "SELECT COUNT(u) FROM " + getEntityClass().getSimpleName() + " u WHERE u.username = :username",
+                    Long.class
+            );
+            query.setParameter("username", username);
+            Long count = query.getSingleResult();
+            return count > 0;
+        }
+        return false;
+    }
+
+    public boolean checkIfEmailExist(String email){
+        if (getEntityClass().isInstance(Pessoa.class)) {
+            TypedQuery<Long> query = getEntityManager().createQuery(
+                    "SELECT COUNT(u) FROM " + getEntityClass().getSimpleName() + " u WHERE u.email = :email",
+                    Long.class
+            );
+            query.setParameter("email", email);
+            Long count = query.getSingleResult();
+            return count > 0;
+        }
+        return false;
+    }
 
     public void close() {
         if (getEntityManager() != null) {

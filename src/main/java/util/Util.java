@@ -18,4 +18,13 @@ public class Util {
         return matcher.matches();
     }
 
+    public static boolean validateEmail(String email){
+        String EMAIL_PATTERN = "^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,7}$"; // REGEX
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+
+
 }

@@ -167,13 +167,10 @@
           </div>
         </div>
 
-        <div class="field">
+        <div class="field" id="usernameField">
           <label class="label">Username</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input" type="text" placeholder="Text" name="username">
-            <%
-              request.getParameter("username");
-            %>
+            <input class="input" type="text"  placeholder="Text" name="username">
             <span class="icon is-small is-left">
               <i class="ion-person"></i>
             </span>
@@ -184,12 +181,12 @@
         <div class="field">
           <label class="label">Email</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="Email" name="email">
+            <input class="input" type="email" id="emailInput" placeholder="Email" name="email">
             <span class="icon is-left">
               <i class="ion-email"></i>
             </span>
             <span class="icon is-right">
-              <i class="ion-checkmark"></i>
+              <i class="ion-alert"></i>
             </span>
           </p>
         </div>

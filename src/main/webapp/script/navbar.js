@@ -55,3 +55,72 @@ document.addEventListener('keydown', (event) => {
 });
 });
 
+
+
+const checkUserExists = async (type, identifier) => {
+    try {
+      const response = await fetch(`/register?${type}=${identifier}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      return data.usernameExists;
+    } catch (error) {
+      console.error('Error during user check:', error);
+      return false;
+    }
+  };
+
+
+function checkFieldEvent (field){
+    field.getElementsByTagName("input")[0].addEventListener("change",(event) => {
+       const identifier = event.target.value
+       const type = event.target.name
+       const el = field.getElementsByClassName("help")[0]
+        const elIcon = field.getElementsByClassName("is-right")[0]
+       const childMsg = document.createElement("p")
+       const childCheckIcon = document.createElement("span")
+        childCheckIcon.classList.add('icon', 'is-right')
+
+        if (elIcon != null){
+            field.getElementsByClassName("control")[0].removeChild(elIcon)
+        }
+        if(el != null){
+            field.removeChild(el)
+        }
+       console.log( type + identifier)
+       checkUserExists(type, identifier)
+        .then((exists) => {
+          if (exists) {
+              event.target.classList.add("is-danger")
+              childMsg.innerHTML= "This username is not available"
+              childMsg.classList.add('help', 'is-danger')
+              childCheckIcon.innerHTML = `<i class="ion-alert"></i>`
+              field.appendChild(childMsg)
+              field.getElementsByClassName("control")[0].appendChild(childCheckIcon)
+          } else {
+              event.target.classList.add("is-success")
+              childMsg.innerHTML= "This username is available"
+              childMsg.classList.add('help', 'is-success')
+              childCheckIcon.innerHTML = `<i class="ion-checkmark"></i>`
+              field.appendChild(childMsg)
+              field.getElementsByClassName("control")[0].appendChild(childCheckIcon)
+          }
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+    })
+}
+
+const usernameField = document.getElementById("usernameField");
+checkFieldEvent(usernameField)
+
+
