@@ -157,7 +157,7 @@
       <form action="register" method="post">
 
 
-        <div class="field">
+        <div class="field register">
           <label class="label">Name</label>
           <div class="control has-icons-left has-icons-right">
             <input class="input" type="text" placeholder="Alfredo de souza" name="nome">
@@ -167,7 +167,7 @@
           </div>
         </div>
 
-        <div class="field" id="usernameField">
+        <div class="field register">
           <label class="label">Username</label>
           <div class="control has-icons-left has-icons-right">
             <input class="input" type="text"  placeholder="Text" name="username">
@@ -178,10 +178,10 @@
         </div>
 
 
-        <div class="field">
+        <div class="field register">
           <label class="label">Email</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" id="emailInput" placeholder="Email" name="email">
+            <input class="input" type="email" placeholder="Email" name="email">
             <span class="icon is-left">
               <i class="ion-email"></i>
             </span>
@@ -193,9 +193,9 @@
 
 
 
-        <div class="field">
+        <div class="field register">
           <label class="label">Data de Nascimento</label>
-          <p class="control has-icons-left">
+          <p class="control has-icons-left has-icons-right">
             <input class="input"  type="date" name="dataNascimento" >
             <span class="icon is-left">
               <i class="ion-calendar"></i>
@@ -204,11 +204,12 @@
         </div>
 
 
-        <div class="field">
+        <div class="field register options">
           <label class="label">Nacionalidade</label>
           <div class="control">
             <div class="select">
               <select name="nacionalidade">
+                <option> </option>
 
             <%
               for ( Nacionalidades n: Nacionalidades.values()) {
@@ -225,20 +226,20 @@
         </div>
 
 
-        <div class="field">
+        <div class="field register">
           <label class="label">Senha</label>
-          <p class="control has-icons-left">
-            <input class="input is-danger" type="password" placeholder="Password">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="password" placeholder="Password" id="firstRgPassword" name="senha">
             <span class="icon is-left">
               <i class="ion-key"></i>
             </span>
           </p>
         </div>
 
-        <div class="field">
+        <div class="field register">
           <label class="label">Repita a senha</label>
-          <p class="control has-icons-left">
-            <input class="input is-danger" type="password" placeholder="Password" name="senha">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="password" placeholder="Password" id="secondRgPassword" name="senha">
             <span class="icon is-left">
               <i class="ion-key"></i>
             </span>
@@ -248,7 +249,7 @@
 
         <div class="field">
           <p class="control">
-            <button class="button is-black">
+            <button id="submitRegister" disabled class="button is-black" >
               Cadastrar
             </button>
           </p>
