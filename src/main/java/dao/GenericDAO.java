@@ -67,7 +67,7 @@ public abstract class GenericDAO<T, Id extends Serializable>{
 
 
     public boolean checkIfUsernameExist(String username){
-        if (getEntityClass().isInstance(Usuario.class)){
+
             TypedQuery<Long> query = getEntityManager().createQuery(
                     "SELECT COUNT(u) FROM " + getEntityClass().getSimpleName() + " u WHERE u.username = :username",
                     Long.class
@@ -75,8 +75,7 @@ public abstract class GenericDAO<T, Id extends Serializable>{
             query.setParameter("username", username);
             Long count = query.getSingleResult();
             return count > 0;
-        }
-        return false;
+
     }
 
     public boolean checkIfEmailExist(String email){

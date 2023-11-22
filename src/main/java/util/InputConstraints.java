@@ -143,6 +143,38 @@ public class InputConstraints {
         return true;
     }
 
+
+    public static boolean validateName(String name){
+        if (name == null || name.equals(""))
+            return false;
+
+        if (name.length() < 5 || name.length() > 50)
+            return false;
+
+        for (char c : name.toCharArray())
+            if (!Character.isLetter(c) && c != ' ')
+                return false;
+
+        return true;
+    }
+
+
+    public static boolean validateNacionalidade(String nacionalidade){
+        if (nacionalidade.equals(" "))
+            return false;
+
+        return true;
+
+    }
+
+
+    public static boolean validateDataNascimento(String dataNascimento){
+        if (dataNascimento == null || dataNascimento.isEmpty())
+            return false;
+        return true;
+    }
+
+
     private static boolean containsUppercase(String password) {
         for (char c : password.toCharArray()) {
             if (Character.isUpperCase(c)) {

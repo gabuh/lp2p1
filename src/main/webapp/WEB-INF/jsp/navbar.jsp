@@ -65,6 +65,7 @@
         <%
           } else {
         %>
+
         <div class="buttons">
           <a class="button is-black js-modal-trigger" data-target="registerButton">
             <strong>Sign up</strong>
@@ -79,7 +80,6 @@
         %>
 
 
-
       </div>
     </div>
 
@@ -89,6 +89,8 @@
 <%
   if (session.getAttribute("username") == null){
 %>
+
+
 <div id="loginButton" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
@@ -102,23 +104,20 @@
 
       <form action="login" method="post">
 
-        <div class="field">
+        <div class="field login">
           <label class="label">Email</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="Email">
+            <input class="input" type="email" placeholder="Username" name="usernameLogin">
             <span class="icon is-small is-left">
               <i class="ion-email"></i>
-            </span>
-            <span class="icon is-small is-right">
-              <i class="ion-checkmark"></i>
             </span>
           </p>
         </div>
 
-        <div class="field">
+        <div class="field login">
           <label class="label">Password</label>
-          <p class="control has-icons-left">
-            <input class="input is-danger" type="password" placeholder="Password">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="password" placeholder="Password" name="passwordLogin">
             <span class="icon is-small is-left">
               <i class="ion-key"></i>
             </span>
@@ -127,7 +126,7 @@
 
         <div class="field">
           <p class="control">
-            <button class="button is-black">
+            <button id="submitLogin" class="button is-black" disabled>
               Login
             </button>
           </p>
@@ -184,9 +183,6 @@
             <input class="input" type="email" placeholder="Email" name="email">
             <span class="icon is-left">
               <i class="ion-email"></i>
-            </span>
-            <span class="icon is-right">
-              <i class="ion-alert"></i>
             </span>
           </p>
         </div>
@@ -254,7 +250,6 @@
             </button>
           </p>
         </div>
-
       </form>
     </section>
 
@@ -264,10 +259,29 @@
   </div>
 </div>
 
+    <%
+      if (session.getAttribute("register") != null && ((boolean)session.getAttribute("register"))){
+    %>
+<div class="modal is-active">
+    <%
+    session.setAttribute("register", false);
+      }else{
+    %>
+    <div class="modal">
+    <%
+      }
+    %>
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box content is-large">
+          <p>${requestScope.registermsg}</p>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
 
-
+<script src="${pageContext.request.contextPath}/script/navbar.js"></script>
 <%
   }
 %>
 
-<script src="${pageContext.request.contextPath}/script/navbar.js"></script>

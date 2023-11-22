@@ -17,4 +17,7 @@
       <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
     </p>
   </div>
+
+  <script src="${pageContext.request.contextPath}/script/script.js"></script>
+
 </footer>
