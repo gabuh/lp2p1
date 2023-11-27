@@ -1,49 +1,5 @@
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Functions to open and close a modal
-    function openModal($el) {
-        $el.classList.add('is-active');
-    }
-
-    function closeModal($el) {
-        $el.classList.remove('is-active');
-    }
-
-    function closeAllModals() {
-        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-            closeModal($modal);
-        });
-    }
-
-(document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-    const modal = $trigger.dataset.target;
-    const $target = document.getElementById(modal);
-
-    $trigger.addEventListener('click', () => {
-        openModal($target);
-    });
-});
-
-// Add a click event on various child elements to close the parent modal
-(document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-    const $target = $close.closest('.modal');
-
-    $close.addEventListener('click', () => {
-        closeModal($target);
-    });
-});
-
-// Add a keyboard event to close all modals
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape') {
-        closeAllModals();
-    }
-});
-});
-
-
-
 
 const checkUserExists = async (type, identifier) => {
     try {
@@ -185,18 +141,64 @@ const inputValidator = {
         if (!this.isLetter(username[username.length -1 ]))
             return "Username deve terminar com uma letra"
 
-
-        if (checkUserExists("username",username)
-        .then((exists) => {
-                return exists
+        this.check(username).catch(() => {
+            return "algo deu errado"
         })
-        .catch((error) => {
-            console.log(error)
-        }))
-            return "This username is not available"
 
-        return true
+        return "checking"
     },
+    async check(username){
+        try {
+            let isRegister = false
+            const checkUser = await checkUserExists("username", username)
+            const control = document.getElementById("usernameControl")
+            const field = document.getElementById("usernameField")
+            const el = field.getElementsByClassName("help")[0]
+            const elIcon = field.getElementsByClassName("is-right")[0]
+            const input = field.getElementsByTagName('input')[0]
+
+            if (elIcon != null){
+                control.removeChild(elIcon)
+                input.classList.remove("is-danger", "is-success")
+            }
+            if(el != null){
+                field.removeChild(el)
+            }
+
+            if (field.classList.value.includes("register"))
+                isRegister = true
+            const childMsg = document.createElement("p")
+            const childCheckIcon = document.createElement("span")
+            childCheckIcon.classList.add('icon', 'is-right')
+            if (checkUser) {
+                if(isRegister){
+                    registerForm.removeItem(input.name)
+                    registerForm.check()
+                }
+                input.classList.add("is-danger")
+                childMsg.classList.add('help', 'is-danger')
+                childCheckIcon.innerHTML = `<i class="ion-alert"></i>`
+                childMsg.innerHTML = "Este username não está disponível"
+                field.appendChild(childMsg)
+                control.appendChild(childCheckIcon)
+            } else {
+                if(isRegister){
+                    registerForm.addItem(input.name)
+                    registerForm.check()
+                }
+                input.classList.add("is-success")
+                childMsg.classList.add('help', 'is-success')
+                childCheckIcon.innerHTML = `<i class="ion-checkmark"></i>`
+                childMsg.innerHTML = "Este username está disponível"
+                field.appendChild(childMsg)
+                control.appendChild(childCheckIcon)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    ,
 
     validateName(name){
         if (name === null || name === "")

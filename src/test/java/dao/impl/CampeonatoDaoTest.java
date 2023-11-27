@@ -1,11 +1,14 @@
 package dao.impl;
 
+import model.Time;
 import model.builder.CampeonatoBuilder;
 import model.Campeonato;
 import model.builder.TimeBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,23 +23,23 @@ class CampeonatoDaoTest {
         campeonatoDao = new CampeonatoDao();
 
 
-        campeonato = new CampeonatoBuilder() //instantiated
-                .create();
-
-        campeonatoComTime = new CampeonatoBuilder() //instantiated with team
-                .addTime(
-                        new TimeBuilder()
-                                .setNome("Rodrigues")
-                                .create()
-                )
-                .create();
-
-        campeonatoDao.persist(new CampeonatoBuilder() //database
-                .create());
-        campeonatoDao.persist(new CampeonatoBuilder()
-                .create());
-        campeonatoDao.persist(new CampeonatoBuilder()
-                .create());
+//        campeonato = new CampeonatoBuilder() //instantiated
+//                .create();
+//
+//        campeonatoComTime = new CampeonatoBuilder() //instantiated with team
+//                .addTime(
+//                        new TimeBuilder()
+//                                .setNome("Rodrigues")
+//                                .create()
+//                )
+//                .create();
+//
+//        campeonatoDao.persist(new CampeonatoBuilder() //database
+//                .create());
+//        campeonatoDao.persist(new CampeonatoBuilder()
+//                .create());
+//        campeonatoDao.persist(new CampeonatoBuilder()
+//                .create());
     }
 
     @Test
@@ -76,5 +79,17 @@ class CampeonatoDaoTest {
 
     }
 
+
+    @Test
+    @DisplayName("check if time comes together")
+    void retrievingCampeonatoWithTime(){
+        Campeonato campeonato1= campeonatoDao.findById(4);
+        Set<Time> times = campeonato1.getTimes();
+        for (Time t:
+             times) {
+            System.out.println(t.getId());
+        }
+        assertTrue(campeonato1.getTimes().size() > 0);
+    }
 
 }

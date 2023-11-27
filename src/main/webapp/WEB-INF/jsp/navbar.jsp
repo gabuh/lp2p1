@@ -22,12 +22,44 @@
   </div>
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item">
+
+      <a class="navbar-item" href="home">
         Home
       </a>
-      <a class="navbar-item">
-        Documentation
+      <%
+        if(session.getAttribute("username") != null && !session.getAttribute("username").equals("admin")){
+      %>
+      <a class="navbar-item" href="time">
+        Acessar meu time
       </a>
+      <%
+        }
+      %>
+
+
+
+      <%
+        if(session.getAttribute("username") != null && session.getAttribute("username").equals("admin")){
+      %>
+      <a class="navbar-item" href="campeonato">
+        Campeonatos
+      </a>
+      <a class="navbar-item" href="partida">
+        Partidas
+      </a>
+      <a class="navbar-item" href="tecnico">
+        Tecnicos
+      </a>
+
+      <a class="navbar-item" href="time">
+        Times
+      </a>
+
+      <%
+        }
+      %>
+
+
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
           More
@@ -36,16 +68,16 @@
           <a class="navbar-item">
             About
           </a>
-          <a class="navbar-item">
-            Jobs
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
+          <%
+            if (session.getAttribute("username") != null){
+          %>
           <hr class="navbar-divider">
           <a class="navbar-item">
-            Report an issue
+            Logout
           </a>
+          <%
+            }
+          %>
         </div>
       </div>
     </div>
@@ -105,11 +137,11 @@
       <form action="login" method="post">
 
         <div class="field login">
-          <label class="label">Email</label>
+          <label class="label">Username</label>
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="Username" name="usernameLogin">
+            <input class="input" type="text" placeholder="Username" name="usernameLogin">
             <span class="icon is-small is-left">
-              <i class="ion-email"></i>
+              <i class="ion-person"></i>
             </span>
           </p>
         </div>
@@ -166,9 +198,9 @@
           </div>
         </div>
 
-        <div class="field register">
+        <div class="field register" id="usernameField">
           <label class="label">Username</label>
-          <div class="control has-icons-left has-icons-right">
+          <div class="control has-icons-left has-icons-right" id="usernameControl">
             <input class="input" type="text"  placeholder="Text" name="username">
             <span class="icon is-small is-left">
               <i class="ion-person"></i>
@@ -259,29 +291,41 @@
   </div>
 </div>
 
-    <%
-      if (session.getAttribute("register") != null && ((boolean)session.getAttribute("register"))){
-    %>
-<div class="modal is-active">
-    <%
-    session.setAttribute("register", false);
-      }else{
-    %>
-    <div class="modal">
-    <%
-      }
-    %>
-      <div class="modal-background"></div>
-      <div class="modal-content">
-        <div class="box content is-large">
-          <p>${requestScope.registermsg}</p>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
 
 <script src="${pageContext.request.contextPath}/script/navbar.js"></script>
 <%
   }
 %>
+
+<%
+  if (session.getAttribute("modalMsg") != null && ((boolean)session.getAttribute("modalMsg"))){
+%>
+<div class="modal is-active">
+    <%
+    session.setAttribute("modalMsg", false);
+      }else{
+    %>
+  <div class="modal">
+    <%
+      }
+    %>
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="box content is-large">
+        <%
+          if (session.getAttribute("modalMsgContent") != null){
+        %>
+        <p><%=session.getAttribute("modalMsgContent")%></p>
+        <%
+          session.setAttribute("modalMsgContent",null);
+        }else{
+        %>
+        <p>${pageScope.modalmsg}</p>
+        <%
+          }
+        %>
+      </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
 

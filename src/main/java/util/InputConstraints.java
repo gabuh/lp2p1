@@ -214,4 +214,16 @@ public class InputConstraints {
     }
 
 
+    public static boolean validNumber(String number){
+        for (char c : number.toCharArray()){
+            if ( Character.isLetter(c) )
+                return false;
+        }
+
+        if (containsSpecialCharacter(number))
+            return false;
+
+        return true;
+    }
+
 }

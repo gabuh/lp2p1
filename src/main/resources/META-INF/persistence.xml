@@ -5,6 +5,7 @@
              version="3.0">
     <persistence-unit name="default">
         <class>model.Pessoa</class>
+        <class>model.Usuario</class>
         <class>model.Campeonato</class>
         <class>model.Tecnico</class>
         <class>model.Jogador</class>

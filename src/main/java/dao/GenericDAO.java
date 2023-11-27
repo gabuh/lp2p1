@@ -66,18 +66,6 @@ public abstract class GenericDAO<T, Id extends Serializable>{
     }
 
 
-    public boolean checkIfUsernameExist(String username){
-
-            TypedQuery<Long> query = getEntityManager().createQuery(
-                    "SELECT COUNT(u) FROM " + getEntityClass().getSimpleName() + " u WHERE u.username = :username",
-                    Long.class
-            );
-            query.setParameter("username", username);
-            Long count = query.getSingleResult();
-            return count > 0;
-
-    }
-
     public boolean checkIfEmailExist(String email){
         if (getEntityClass().isInstance(Pessoa.class)) {
             TypedQuery<Long> query = getEntityManager().createQuery(
@@ -90,6 +78,19 @@ public abstract class GenericDAO<T, Id extends Serializable>{
         }
         return false;
     }
+
+
+    public boolean checkIfIdExist(int id){
+        TypedQuery<Long> query = getEntityManager().createQuery(
+                "SELECT COUNT(u) FROM " + getEntityClass().getSimpleName() + " u WHERE u.id = :id",
+                Long.class
+        );
+        query.setParameter("id", id);
+        Long count = query.getSingleResult();
+        return count > 0;
+    }
+
+
 
     public void close() {
         if (getEntityManager() != null) {

@@ -1,16 +1,16 @@
 package model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
+@Getter
 @Entity
 @Table
 public class Campeonato {
@@ -21,6 +21,8 @@ public class Campeonato {
     @JoinTable(name = "campeonato_time", joinColumns = @JoinColumn(name = "campeonato_id"), inverseJoinColumns = @JoinColumn(name = "time_id"))
     private Set<Time> times;
 
+    @Column
+    private String nome;
 
     @Column
     private String campeao;
@@ -40,6 +42,19 @@ public class Campeonato {
 
     public Campeonato(Set<Time> times, String campeao, String viceCampeao) {
         this.times = times;
+        this.campeao = campeao;
+        this.viceCampeao = viceCampeao;
+    }
+
+    public Campeonato(String nome, String campeao, String viceCampeao) {
+        this.nome = nome;
+        this.campeao = campeao;
+        this.viceCampeao = viceCampeao;
+    }
+
+    public Campeonato(Set<Time> times, String nome, String campeao, String viceCampeao) {
+        this.times = times;
+        this.nome = nome;
         this.campeao = campeao;
         this.viceCampeao = viceCampeao;
     }

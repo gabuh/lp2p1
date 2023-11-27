@@ -2,21 +2,20 @@ package servlets;
 
 import com.google.gson.JsonObject;
 import dao.impl.TecnicoDao;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Tecnico;
 import util.InputConstraints;
 import util.Util;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.MessageFormat;
+
 
 @WebServlet("/register")
 public class CreateUsuarioServlet extends HttpServlet {
@@ -29,7 +28,7 @@ public class CreateUsuarioServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         boolean usernameExists = tecnicoDao.checkIfUsernameExist(username);
         JsonObject jsonResponse = new JsonObject();
@@ -49,9 +48,10 @@ public class CreateUsuarioServlet extends HttpServlet {
         String email = req.getParameter("email");
         String senha = req.getParameter("senha");
         String username = req.getParameter("username");
+        HttpSession session = req.getSession();
 
-System.out.println(nome + " "+ dataNascimento + " " + nacionalidade + " " + email + " " + senha + " "+ username);
-        System.out.println(validateInputs(nome, dataNascimento , nacionalidade,  email,  senha,  username));
+//System.out.println(nome + " "+ dataNascimento + " " + nacionalidade + " " + email + " " + senha + " "+ username);
+//        System.out.println(validateInputs(nome, dataNascimento , nacionalidade,  email,  senha,  username));
 
         if (validateInputs(nome, dataNascimento , nacionalidade,  email,  senha,  username)){
             Tecnico tecnico = new Tecnico(
@@ -64,18 +64,14 @@ System.out.println(nome + " "+ dataNascimento + " " + nacionalidade + " " + emai
 
             tecnicoDao.persist(tecnico);
 
-            req.getSession().setAttribute("register", true);
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.jsp");
-            req.setAttribute("registermsg","Usuário registrado com sucesso! ");
-            requestDispatcher.forward(req, resp);
-
+            session.setAttribute("modalMsg", true);
+            session.setAttribute("modalMsgContent","Usuário registrado com sucesso! ");
+            resp.sendRedirect("/");
         } else {
 
-            req.getSession().setAttribute("register", true);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/index.jsp");
-            req.setAttribute("registermsg","Usuário não registrado!");
-            requestDispatcher.forward(req, resp);
+            session.setAttribute("register", true);
+            session.setAttribute("modalMsgContent","Usuário não registrado!");
+            resp.sendRedirect("/");
 
         }
 
@@ -122,6 +118,10 @@ System.out.println(nome + " "+ dataNascimento + " " + nacionalidade + " " + emai
 
         if (!InputConstraints.validateNacionalidade(nacionalidade)){
             System.out.println(nacionalidade);
+            return false;
+        }
+
+        if (tecnicoDao.checkIfUsernameExist(username)){
             return false;
         }
 
